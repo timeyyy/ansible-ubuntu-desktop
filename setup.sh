@@ -1,10 +1,40 @@
 #!/bin/sh
-sudo apt-get install -y git python-pip python-dev
-sudo pip install ansible
-git clone https://github.com/jdauphant/ansible-ubuntu-desktop.git
-cd ansible-ubuntu-desktop
-sed "s/git@github.com:/https:\/\/github.com\//" .gitmodules > .gitmodules_new
-mv .gitmodules_new .gitmodules
-git submodule init
-git submodule update
-ansible-playbook installation.yml --sudo -K -c local -i "localhost,"
+
+# Standalone installer for Unixs
+
+if [ $# -ne 1 ]; then
+  echo "You must specify the installation directory!"
+  exit 1
+fi
+
+# Convert the installation directory to absolute path
+case $1 in
+  /*) INSTALL_DIR=$1;;
+  *) INSTALL_DIR=$PWD/$1;;
+esac
+
+echo "Install to \"$INSTALL_DIR\"..."
+if [ -e "$INSTALL_DIR" ]; then
+  echo "\"$INSTALL_DIR\" already exists!"
+fi
+
+echo ""
+
+# check git command
+type git || {
+  echo 'Installing git'
+  sudo apt-get install -y git
+}
+echo ""
+
+# make plugin dir and fetch ansible_config
+if ! [ -e "$INSTALL_DIR" ]; then
+  echo "Begin fetching ansible_config..."
+  mkdir -p "$INSTALL_DIR"
+  git clone git@github.com:timeyyy/ansible-ubuntu-desktop.git "$INSTALL_DIR"
+  echo "Finished fetching."
+  echo ""
+  echo "Running start.sh"
+  sh $INSTALL_DIR/start.sh
+fi
+

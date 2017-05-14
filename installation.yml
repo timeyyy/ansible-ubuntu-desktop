@@ -17,65 +17,63 @@
      cleanup_days: 14
      language: "en_US"
      lang: "{{language}}.UTF-8"
-     timezone: "Europe/Paris"
+     timezone: "Europe/Berlin"
      ansible_pkg_state: latest
      packaging_ubuntu_extras_repository: true
      packaging_ubuntu_partner_repository: true
      packaging_ubuntu_multiverse_repository: true
      packaging_packages:
        - zsh
-       - vim
+       - neovim
        - curl
-       - unzip
-       - icedtea-plugin
+
 # dev
-       - ipython
+       #- ipython
        - git
-       - mercurial
-       - tig
-       - openjdk-7-jdk 
-       - maven
+       #- mercurial
+       #- tig
+       #- openjdk-7-jdk 
+       #- maven
        - python-setuptools
-       - less
-       - maven
-       - build-essential
-       - g++
-       - nodejs
-       - nodejs-dev
-       - valgrind
-       - graphviz
-       - protobuf-compiler
-       - rubygems
-       - ruby-dev
+       #- maven
+       #- build-essential
+       #- g++
+       #- nodejs
+       #- nodejs-dev
+       #- valgrind
+       #- graphviz
+       #- protobuf-compiler
+       #- rubygems
+       #- ruby-dev
 # admin
-       - openssh-server
-       - nmap
-       - htop
+       #- openssh-server
+       #- nmap
+       #- htop
        - tree
-       - iotop
-       - sysstat
-       - screen
-       - tmux
-       - openvpn
-       - inetutils-traceroute
-       - sshfs
-       - vde2
-       - cryptsetup
-       - traceroute
-       - powertop
-       - aptitude
-       - aircrack-ng
-       - autofs
-       - ecryptfs-utils
-       - lm-sensors
-       - gpm
-       - ntfs-3g
-       - whois
-       - dstat
-       - iftop
-       - nload
-       - speedometer
-       - nodejs-legacy
+       #- iotop
+       #- sysstat
+       #- screen
+       #- tmux
+       #- openvpn
+       #- inetutils-traceroute
+       #- sshfs
+       #- vde2
+       #- cryptsetup
+       #- traceroute
+       #- powertop
+       #- aptitude
+       #- aircrack-ng
+       #- autofs
+       #- ecryptfs-utils
+       #- lm-sensors
+       #- gpm
+       #- ntfs-3g
+       #- whois
+       #- dstat
+       #- iftop
+       #- nload
+       #- speedometer
+       #- nodejs-legacy
    roles:
     - timezone
     - lang  
@@ -86,73 +84,73 @@
          to_port: 22
          protocol: tcp
     - packaging
-    - java
-    - scala
-    - role: sudo
-      sudo_files:
-         - name: vpn-user
-           vars:
-             - "%vpn-user ALL=NOPASSWD: /usr/sbin/openvpn"
+    #- java
+    #- scala
+    #- role: sudo
+    #  sudo_files:
+    #     - name: vpn-user
+    #       vars:
+    #         - "%vpn-user ALL=NOPASSWD: /usr/sbin/openvpn"
 #UI
     - role: gnome-shell
       gnome_with_ppa_staging: true
       gnome_shell_pkg_state: latest
     - role: packaging
       packaging_packages:
-       - keepassx
-       - xchat
-       - irssi
-       - gitg
+       - keepass2
+       #- xchat
+       #- irssi
+       #- gitg
        - virtualbox
-       - qemu
-       - chromium-browser
-       - pepperflashplugin-nonfree
-       - nautilus-open-terminal
-       - terminator
+       #- qemu
+       #- chromium-browser
+       #- pepperflashplugin-nonfree
+       #- nautilus-open-terminal
+       #- terminator
        - skype
        - firefox
        - vlc
-       - audacity
-       - geany
+       #- audacity
+       #- geany
        - filezilla
-       - libreoffice
-       - baobab
-       - thunderbird
-       - golang-go
-       - gparted
-       - remmina
-       - playonlinux
-       - qtcreator
-       - qt-sdk
-       - quicksynergy
-       - simple-scan
-       - usb-creator-gtk
-       - virt-manager
-       - wireshark
-       - synergy
-       - gimp
-       - pidgin
-       - pidgin-otr
-    - role: users
-      users_groups:
-         - name: "vpn-user"
-           gid: 1500
-    - packerio
+       #- libreoffice
+       #- baobab
+       #- thunderbird
+       #- golang-go
+       #- gparted
+       #- remmina
+       #- playonlinux
+       #- qtcreator
+       #- qt-sdk
+       #- quicksynergy
+       #- simple-scan
+       #- usb-creator-gtk
+       #- virt-manager
+       #- wireshark
+       #- synergy
+       #- gimp
+       #- pidgin
+       #- pidgin-otr
+    #- role: users
+    #  users_groups:
+    #     - name: "vpn-user"
+    #       gid: 1500
+    #- packerio
     - ansible
-    - vagrant
+    #- vagrant
     - intellij
-    - sublimetext
+    #- sublimetext
     - spotify
     - dropbox
-    - hangout
-    - atom
-    - docker
-    - role: brother
-      brother_printers_to_install: ['DCP-375CW']
+    #- hangout
+    #- atom
+    #- docker
+    #- role: brother
+    #  brother_printers_to_install: ['DCP-375CW']
    tasks :
-    - name: Ensure NPM is installed
-      apt: pkg=npm
-      tags: trash
+    #- name: Ensure NPM is installed
+    #  apt: pkg=npm
+    #  tags: trash
     - name: Ensure trash is installed
       npm: name=trash global=yes
       tags: trash
@@ -165,13 +163,13 @@
     - name: Install python apps
       pip: name={{item}}
       with_items: 
-        - awscli
+      #  - awscli
         - virtualenv
-        - google-api-python-client
-        - autoenv
-    - name: Install ruby apps
-      gem: name={{item}}
-      with_items:
-        - travis 
+      #  - google-api-python-client
+      #  - autoenv
+    #- name: Install ruby apps
+    #  gem: name={{item}}
+    #  with_items:
+    #    - travis 
  - include: patchs/patch-grub-lvm/patch-grub-lvm.yml
  - include: patchs/ssl3-poodle/patch-ssl3-poodle.yml
