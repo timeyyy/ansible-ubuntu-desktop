@@ -31,7 +31,7 @@ echo ""
 if ! [ -e "$INSTALL_DIR" ]; then
   echo "Begin fetching ansible_config..."
   mkdir -p "$INSTALL_DIR"
-  git clone git@github.com:timeyyy/ansible-ubuntu-desktop.git "$INSTALL_DIR"
+  git clone -b tim git@github.com:timeyyy/ansible-ubuntu-desktop.git "$INSTALL_DIR"
   echo "Finished fetching."
   echo ""
   echo "Running start.sh"
